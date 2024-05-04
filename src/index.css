@@ -1,0 +1,99 @@
+* {
+  box-sizing: border-box;
+  list-style-type: none;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+ul {
+  padding-left: 0;
+}
+button,
+input {
+  outline: none;
+  font-size: 1rem;
+}
+button {
+  cursor: pointer;
+}
+a {
+  text-decoration: none;
+  color: black;
+}
+
+/* Below are stories styles  */
+
+.slider-container {
+  margin-block: 2em;
+  flex-grow: 0;
+  /* z-index: -2; */
+}
+.story-heading {
+  text-align: center;
+  margin-block: 10px;
+  font-size: clamp(0.7rem, 1vw, 1.1rem);
+}
+
+.slick-slider {
+  margin-inline: 2em;
+}
+
+.slick-next:before,
+.slick-prev:before {
+  color: #000;
+}
+
+.story-container {
+  padding-inline: 10px;
+  display: grid !important;
+  place-items: center;
+}
+.story-container img {
+  aspect-ratio: 1;
+  width: 60px;
+  border-radius: 50%;
+}
+@media screen and (max-width: 400px) {
+  .story-container img {
+    width: 50px;
+  }
+  .story-container {
+    padding: 0;
+  }
+}
+
+/* Header styles  */
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+.logo h1 {
+  font-size: clamp(1.3rem, 1.5vw, 1.7rem);
+}
+.logo img {
+  width: clamp(46px, 4vw, 80px);
+  aspect-ratio: 2/1;
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.menu-items-container {
+  display: flex;
+  gap: 10px;
+}
