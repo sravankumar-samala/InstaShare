@@ -1,20 +1,30 @@
 import { useState } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import { IoEye } from "react-icons/io5";
+import { IoEyeOff } from "react-icons/io5";
 
 export default function Login() {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const jwtToken = Cookies.get("jwt_token");
   if (jwtToken) return <Navigate to="/" />;
 
-  const onChangeUserName = (e) => setUserName(e.target.value);
+  const onChangeUserName = (e) => {
+    setUserName(e.target.value);
+    setError(null);
+  };
 
-  const onChangePassword = (e) => setPassword(e.target.value);
+  const handleShowPassword = () => setShowPassword(!showPassword);
 
+  const onChangePassword = (e) => {
+    setPassword(e.target.value);
+    setError(null);
+  };
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -63,17 +73,32 @@ export default function Login() {
             value={userName}
             onChange={onChangeUserName}
             placeholder="Enter Your Name"
+            className="rounded-md"
+            required
           />
         </div>
         <div className="grid gap-1">
           <label htmlFor="password">PASSWORD</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={onChangePassword}
-            placeholder="Enter Your Password"
-          />
+          <span className="flex">
+            <input
+              className="flex-1 rounded-tl-md rounded-bl-md"
+              type={showPassword ? "text" : "password"}
+              id="password"
+              value={password}
+              onChange={onChangePassword}
+              placeholder="Enter Your Password"
+              required
+            />
+            <button
+              type="button"
+              onClick={handleShowPassword}
+              className="text-xl bg-gray-200 grid place-items-center px-2 rounded-tr-md rounded-br-md"
+            >
+              {showPassword ? <IoEye /> : <IoEyeOff />}
+            </button>
+          </span>
+
+          {error && <p className="text-red-600 text-md sm:text-lg">{error}</p>}
         </div>
         <button
           type="submit"
@@ -81,7 +106,6 @@ export default function Login() {
         >
           Login
         </button>
-        {error && <p>{error}</p>}
       </form>
     </div>
   );
