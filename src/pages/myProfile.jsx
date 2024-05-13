@@ -1,15 +1,13 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useState, useCallback } from "react";
 import Cookies from "js-cookie";
-import Header from "../components/header";
 import LoadingView from "../components/loader";
 import RenderProfileDetails from "../components/renderProfileDetails";
-import FailureView from "../components/searchErrorView";
+import FailureView from "../components/failureView";
 
 export default function MyProfile() {
   const [myProfileData, setMyProfileData] = useState(null);
   const [myProfilePending, setMyProfilePending] = useState(false);
-  const [profileErr, setProfileErr] = useState(false);
 
   const getMyProfileData = useCallback(async () => {
     setMyProfilePending(true);
@@ -28,9 +26,8 @@ export default function MyProfile() {
       const data = await response.json();
       if (!response.ok) throw new Error(data.err_msg);
       setMyProfileData(data.profile);
-      setProfileErr(false);
     } catch (error) {
-      setProfileErr(true);
+      console.log(error.message);
     } finally {
       setMyProfilePending(false);
     }
@@ -38,17 +35,16 @@ export default function MyProfile() {
 
   useEffect(() => {
     getMyProfileData();
-  }, []);
+  }, [getMyProfileData]);
 
   return (
     <div className="profile-page-container">
-      <Header />
       {myProfilePending ? (
         <LoadingView />
       ) : (
         <>
           {myProfileData === null ? (
-            <FailureView fetchAgain={getMyProfileData} />
+            <FailureView fetchData={getMyProfileData} />
           ) : (
             <RenderProfileDetails profileObj={myProfileData} user="me" />
           )}

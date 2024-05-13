@@ -2,16 +2,14 @@
 import { useEffect, useState, useCallback } from "react";
 import Cookies from "js-cookie";
 import { useParams } from "react-router-dom";
-import Header from "../components/header";
 import LoadingView from "../components/loader";
 import RenderProfileDetails from "../components/renderProfileDetails";
-import FailureView from "../components/searchErrorView";
+import FailureView from "../components/failureView";
 
 export default function UserProfile() {
   const { id } = useParams();
   const [userProfileData, setUserProfileData] = useState(null);
   const [userProfilePending, setUserProfilePending] = useState(false);
-  const [profileErr, setProfileErr] = useState(false);
 
   const getUserProfileData = useCallback(async () => {
     setUserProfilePending(true);
@@ -30,9 +28,8 @@ export default function UserProfile() {
       const data = await response.json();
       if (!response.ok) throw new Error(data.err_msg);
       setUserProfileData(data.user_details);
-      setProfileErr(false);
     } catch (error) {
-      setProfileErr(true);
+      console.log(error.message);
     } finally {
       setUserProfilePending(false);
     }
@@ -40,11 +37,10 @@ export default function UserProfile() {
 
   useEffect(() => {
     getUserProfileData();
-  }, []);
+  }, [getUserProfileData]);
 
   return (
     <div className="profile-page-container">
-      <Header />
       {userProfilePending ? (
         <LoadingView />
       ) : (
@@ -52,7 +48,7 @@ export default function UserProfile() {
           {userProfileData !== null ? (
             <RenderProfileDetails profileObj={userProfileData} user="other" />
           ) : (
-            <FailureView fetchAgain={getUserProfileData} />
+            <FailureView fetchData={getUserProfileData} />
           )}
         </>
       )}

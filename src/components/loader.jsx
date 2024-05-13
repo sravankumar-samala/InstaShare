@@ -3,7 +3,7 @@ import ReactLoading from "react-loading";
 
 export default function LoadingView() {
   return (
-    <div className="loader-container" testid="loader">
+    <div className="min-h-[100px] grid place-items-center">
       <ReactLoading
         type="spinningBubbles"
         color="#4094EF"

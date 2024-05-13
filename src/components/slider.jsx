@@ -11,7 +11,7 @@ const settings = {
     {
       breakpoint: 1024,
       settings: {
-        slidesToShow: 7,
+        slidesToShow: 8,
         slidesToScroll: 1,
       },
     },
@@ -39,14 +39,25 @@ const settings = {
   ],
 };
 
+function formatStoryName(string) {
+  const newString = string.split(" ").join("_").slice(0, 10);
+  return `${newString}...`;
+}
+
 export default function SliderStories({ usersStories }) {
   return (
-    <ul>
+    <ul className="border-b-2 border-gray-200 pb-4">
       <Slider {...settings}>
         {usersStories?.map((story) => (
           <li className="story-container" key={story.user_id}>
-            <img src={story.story_url} alt="user story" />
-            <span className="story-heading">{story.user_name}</span>
+            <img
+              src={story.story_url}
+              alt="user story"
+              className="rounded-full w-[50px] sm:w-[60px]"
+            />
+            <span className="story-heading my-2 text-sm break-words">
+              {formatStoryName(story.user_name)}
+            </span>
           </li>
         ))}
       </Slider>

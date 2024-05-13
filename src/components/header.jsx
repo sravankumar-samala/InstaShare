@@ -1,18 +1,25 @@
-/* eslint-disable react/no-unknown-property */
-import { FaSearch } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import Cookies from "js-cookie";
 import PropTypes from "prop-types";
+import { FiMenu } from "react-icons/fi";
+import { RxCross2 } from "react-icons/rx";
+import { useMediaQuery } from "react-responsive";
+import { FaSearch } from "react-icons/fa";
+import { useInstaShareContext } from "../context/instaShareContext";
+import LargeScreenNavItems from "./largeScreenNavItems";
+import SmallScreenNavItems from "./smallScreenNavItems";
 
-export default function Header({
-  searchValue,
-  handleSearchValue,
-  fetchSearchResults,
-}) {
+export default function Header({ goToSearchResults }) {
+  const { handleDispatch, searchValue, toggleNavExpanded, isNavExpanded } =
+    useInstaShareContext();
+  const isSmallScreen = useMediaQuery({ query: "(max-width: 768px)" });
   const navigate = useNavigate();
-  const handleOnChange = (e) => {
-    handleSearchValue(e);
-    console.log(e.target.value);
+  const location = useLocation();
+  const path = location.pathname;
+
+  const handleSearchValue = (event) => {
+    const value = event.target.value;
+    handleDispatch("setSearchValue", { value });
   };
 
   const handleLogout = () => {
@@ -21,50 +28,65 @@ export default function Header({
   };
 
   return (
-    <div className="header-container bg-zinc-700">
-      <Link to="/" className="logo">
-        <img
-          src="https://res.cloudinary.com/dug9vpon2/image/upload/v1698733302/Insta_share_logo_vlehyi.png"
-          alt="website logo"
-        />
-        <h1>Insta Share</h1>
-      </Link>
+    <div className="bg-white max-w-[1028px] py-5 mx-auto">
+      <div className="flex justify-between items-center relative">
+        <NavLink to="/" className="logo flex items-center gap-2">
+          <img
+            src="https://res.cloudinary.com/dug9vpon2/image/upload/v1698733302/Insta_share_logo_vlehyi.png"
+            alt="website logo"
+          />
+          <h1>Insta Share</h1>
+        </NavLink>
+        {!isSmallScreen ? (
+          <LargeScreenNavItems
+            handleLogout={handleLogout}
+            goToSearchResults={goToSearchResults}
+            handleSearchValue={handleSearchValue}
+          />
+        ) : (
+          <SmallScreenNavItems handleSearchValue={handleSearchValue} />
+        )}
 
-      <div className="nav-container">
-        <div className="search-container">
+        {isSmallScreen && (
+          <div className="text-2xl z-20">
+            {isNavExpanded ? (
+              <button type="button" onClick={toggleNavExpanded}>
+                <RxCross2 />
+              </button>
+            ) : (
+              <button type="button" onClick={toggleNavExpanded}>
+                <FiMenu />
+              </button>
+            )}
+          </div>
+        )}
+      </div>
+
+      {isSmallScreen && path === "/search-results" && (
+        <form
+          onSubmit={goToSearchResults}
+          className="w-fit mt-4 mx-auto flex border border-gray-500 rounded-md overflow-hidden"
+        >
           <input
+            className="px-1 text-md max-w-48"
             type="search"
             placeholder="Search Caption"
             value={searchValue}
-            onChange={handleOnChange}
+            onChange={handleSearchValue}
           />
           <button
-            type="button"
-            aria-label="search"
-            testid="searchIcon"
-            onClick={fetchSearchResults}
+            className="bg-gray-500 px-3 py-[6px] text-white"
+            type="submit"
+            onClick={goToSearchResults}
           >
             <FaSearch />
           </button>
-        </div>
-        <ul className="menu-items-container">
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/my-profile">Profile</Link>
-          </li>
-        </ul>
-        <button type="button" onClick={handleLogout}>
-          Logout
-        </button>
-      </div>
+        </form>
+      )}
     </div>
   );
 }
 
 Header.propTypes = {
-  searchValue: PropTypes.string,
-  handleSearchValue: PropTypes.func,
-  fetchSearchResults: PropTypes.func,
+  goToSearchResults: PropTypes.func,
 };

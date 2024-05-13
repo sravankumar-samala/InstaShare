@@ -2,42 +2,24 @@ import { BsGrid3X3 } from "react-icons/bs";
 import PropTypes from "prop-types";
 import ProfileStories from "./renderProfileStories";
 import ProfilePosts from "./renderProfilePosts";
+import ProfileBio from "./renderProfileBio";
 
 export default function RenderProfileDetails({ profileObj, user }) {
-  const userType = user === "me" ? "my" : "user";
-
   return (
-    <div className="profile-intro-container">
-      <div className="profile-bio-container">
-        <img src={profileObj.profile_pic} alt={`${userType} profile`} />
-        <div className="profile-bio">
-          <h1>{profileObj.user_name}</h1>
-          <div className="profile-details">
-            <p>
-              <span>{profileObj.posts_count}</span> posts
-            </p>
-            <p>
-              <span>{profileObj.followers_count}</span> followers
-            </p>
-            <p>
-              <span>{profileObj.following_count}</span> following
-            </p>
-          </div>
-          <p>{profileObj.user_id}</p>
-          <p>{profileObj.user_bio}</p>
-        </div>
-      </div>
+    <div className="profile-intro-container py-5">
+      <ProfileBio profileObj={profileObj} user={user} />
       <ProfileStories stories={profileObj.stories} user={user} />
-      <div className="posts-container">
-        <div className="posts-header">
+      <div className="grid gap-5">
+        <div className="flex gap-4 items-center">
           <BsGrid3X3 />
-          <h1>Posts</h1>
-          <ProfilePosts posts={profileObj.posts} user={user} />
+          <h1 className="font-medium text-xl">Posts</h1>
         </div>
+        <ProfilePosts posts={profileObj.posts} user={user} />
       </div>
     </div>
   );
 }
+
 RenderProfileDetails.propTypes = {
   profileObj: PropTypes.any.isRequired,
   user: PropTypes.string.isRequired,

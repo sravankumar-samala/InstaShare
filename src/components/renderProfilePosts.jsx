@@ -12,7 +12,7 @@ export default function ProfilePosts({ posts, user }) {
           <h1>No Posts</h1>
         </div>
       ) : (
-        <ul>
+        <ul className="grid grid-cols-3 gap-2 md:gap-3">
           {posts?.map((post) => (
             <li key={post.id}>
               <img src={post.image} alt={`${userType} post`} />

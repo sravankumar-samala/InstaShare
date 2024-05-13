@@ -1,0 +1,36 @@
+.profile-bio-container {
+  display: grid;
+  grid-template-areas:
+    "name name"
+    "picture stats"
+    "description description";
+  align-items: center;
+  gap: 20px;
+}
+.profile-image {
+  grid-area: picture;
+}
+.profile-name {
+  grid-area: name;
+}
+.profile-description {
+  grid-area: description;
+}
+.profile-stats {
+  grid-area: stats;
+}
+.profile-image img {
+  width: 250px;
+  /* max-width: 300px; */
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
+
+@media screen and (min-width: 640px) {
+  .profile-bio-container {
+    grid-template-areas:
+      "picture name"
+      "picture stats"
+      "picture description";
+  }
+}

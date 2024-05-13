@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unknown-property */
 import { useState } from "react";
 import { BsHeart } from "react-icons/bs";
-import { FcLike } from "react-icons/fc";
+import { BsHeartFill } from "react-icons/bs";
 import PropTypes from "prop-types";
 
 export default function LikeIcon({ handlePostsLikes }) {
@@ -24,7 +24,7 @@ export default function LikeIcon({ handlePostsLikes }) {
           aria-label="like"
           onClick={incrementLikesCount}
         >
-          <BsHeart />
+          <BsHeart size={18} />
         </button>
       ) : (
         <button
@@ -34,7 +34,7 @@ export default function LikeIcon({ handlePostsLikes }) {
           aria-label="disLike"
           onClick={decrementLikesCount}
         >
-          <FcLike />
+          <BsHeartFill size={18} fill="#F44336" />
         </button>
       )}
     </>

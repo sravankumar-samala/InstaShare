@@ -1,34 +1,51 @@
-// import Cookies from 'js-cookie'
-// import Header from '../ui/header'
-
-// export default function SearchResults() {
-//   const getSearchResults = async () => {
-//     const searchApi = `https://apis.ccbp.in/insta-share/posts?search=${''}`
-//     const jwtToken = Cookies.get('jwt_token')
-//     const options = {
-//       method: 'GET',
-//       headers: {
-//         Authorization: `Bearer ${jwtToken}`,
-//       },
-//     }
-//     try {
-//       const response = await fetch(searchApi, options)
-//       const data = await response.json()
-//       if (!response.ok) throw new Error(data.err_msg)
-//       console.log(data)
-//     } catch (error) {
-//       console.log(error.message)
-//     }
-//   }
-
-//   return (
-//     <div className="search-results-container">
-//       <Header />
-//       <h1>Search Results container</h1>
-//     </div>
-//   )
-// }
+import { useInstaShareContext } from "../context/instaShareContext";
+import { useEffect } from "react";
+import SearchNotFound from "../components/searchNotFoundView";
+import FailureView from "../components/failureView";
+import LoadingView from "./loader";
+import PostItem from "./postItem";
 
 export default function SearchResults() {
-  return <h1>Search Results</h1>;
+  const {
+    searchValue,
+    searchError,
+    searchResults,
+    searchResultsPending,
+    getSearchResults,
+  } = useInstaShareContext();
+
+  useEffect(() => {
+    if (!searchValue) {
+      getSearchResults();
+    }
+  }, []);
+
+  return (
+    <div className="search-results-container">
+      <div className="search-container py-10">
+        <h1 className="hidden sm:block font-medium text-2xl text-center my-5">
+          Search Results
+        </h1>
+        {searchResultsPending ? (
+          <LoadingView />
+        ) : (
+          <>
+            {searchError ? (
+              <FailureView fetchData={getSearchResults} />
+            ) : (
+              <ul className="grid justify-items-center gap-5">
+                {searchResults.length !== 0 ? (
+                  searchResults?.map((each) => (
+                    <PostItem key={each.post_id} postObj={each} />
+                  ))
+                ) : (
+                  <SearchNotFound />
+                )}
+              </ul>
+            )}
+          </>
+        )}
+      </div>
+    </div>
+  );
 }
