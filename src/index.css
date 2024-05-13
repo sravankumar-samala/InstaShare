@@ -36,7 +36,7 @@ a {
   font-size: clamp(0.9rem, 1.3vw, 1.5rem);
 }
 .login input {
-  @apply py-2 px-3 bg-gray-200 text-lg;
+  @apply w-full py-2 px-3 bg-gray-200 text-lg;
 }
 /* Below are stories styles  */
 

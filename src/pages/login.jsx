@@ -56,7 +56,7 @@ export default function Login() {
       </div>
       <form
         onSubmit={handleSubmit}
-        className="login justify-self-center grid gap-6 w-[100%] max-w-[360px]"
+        className="login justify-self-center grid gap-6 w-[100%] max-w-[350px]"
       >
         <div className="grid gap-3 place-content-center justify-items-center">
           <img
