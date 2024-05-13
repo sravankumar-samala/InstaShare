@@ -31,7 +31,13 @@ button {
 a {
   text-decoration: none;
 }
-
+.login label {
+  @apply text-sm font-medium;
+  font-size: clamp(0.9rem, 1.3vw, 1.5rem);
+}
+.login input {
+  @apply py-2 px-3 bg-gray-200 rounded-md text-lg;
+}
 /* Below are stories styles  */
 
 .slider-container {

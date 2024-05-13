@@ -11,20 +11,24 @@ export default function ProfileBio({ profileObj, user }) {
       <div className="profile-image">
         <img src={profileObj.profile_pic} alt={`${userType} profile`} />
       </div>
-      <h1 className="font-normal text-3xl profile-name">
+      <h1 className="font-normal text-2xl md:text-3xl profile-name">
         {profileObj.user_name}
       </h1>
-      <div className="flex gap-3 profile-stats">
+      <div className="flex gap-3 sm:gap-5 profile-stats">
         <UserStats>
-          <span className="font-bold">{profileObj.posts_count}</span>
+          <span className="font-bold text-lg">{profileObj.posts_count}</span>
           posts
         </UserStats>
         <UserStats>
-          <span className="font-bold">{profileObj.followers_count}</span>
+          <span className="font-bold text-lg">
+            {profileObj.followers_count}
+          </span>
           followers
         </UserStats>
         <UserStats>
-          <span className="font-bold">{profileObj.following_count}</span>
+          <span className="font-bold text-lg">
+            {profileObj.following_count}
+          </span>
           following
         </UserStats>
       </div>

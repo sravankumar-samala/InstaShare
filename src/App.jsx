@@ -1,4 +1,4 @@
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import ProtectedRoute from "./pages/protectedRoute";
 import Login from "./pages/login";
 import Home from "./pages/home";
@@ -11,6 +11,7 @@ import { useInstaShareContext } from "./context/instaShareContext";
 
 function App() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { getSearchResults, searchValue } = useInstaShareContext();
 
   const goToSearchResults = (e) => {
@@ -20,11 +21,14 @@ function App() {
   };
 
   return (
-    <div className="min-h-[100vh] px-3 pb-16 overflow-hidden ">
-      <div className="w-full bg-white">
-        <Header goToSearchResults={goToSearchResults} />
-      </div>
-      <div className="max-w-[1028px] mx-auto">
+    <div className="min-h-[100vh] pb-16 overflow-hidden ">
+      {location.pathname !== "/login" && (
+        <div className="w-full bg-white px-3">
+          <Header goToSearchResults={goToSearchResults} />
+        </div>
+      )}
+
+      <div className="max-w-[1028px] mx-auto px-3">
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route index path="/" element={<ProtectedRoute Component={Home} />} />

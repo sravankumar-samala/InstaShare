@@ -41,7 +41,7 @@ export default function LargeScreenNavItems({
       </ul>
       <button
         type="button"
-        className="px-4 text-md bg-blue-500 text-white rounded-md"
+        className="px-4 py-[2px] text-md bg-blue-500 text-white rounded-md"
         onClick={handleLogout}
       >
         Logout

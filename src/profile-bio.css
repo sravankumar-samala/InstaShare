@@ -5,7 +5,7 @@
     "picture stats"
     "description description";
   align-items: center;
-  gap: 20px;
+  gap: 10px;
 }
 .profile-image {
   grid-area: picture;
@@ -20,6 +20,7 @@
   grid-area: stats;
 }
 .profile-image img {
+  min-width: 80px;
   width: 250px;
   /* max-width: 300px; */
   aspect-ratio: 1;
@@ -32,5 +33,6 @@
       "picture name"
       "picture stats"
       "picture description";
+    gap: 20px;
   }
 }
